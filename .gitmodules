@@ -1,12 +1,15 @@
-[submodule "gestibanque_spring"]
-	path = gestibank-spring
-	url = https://github.com/kxxdhdn/gestibanque_spring.git
 [submodule "gestibank-uml"]
 	path = gestibank-uml
 	url = https://github.com/kxxdhdn/gestibank-uml.git
 [submodule "gestibank-java"]
 	path = gestibank-java
 	url = https://github.com/kxxdhdn/gestibank-java.git
+[submodule "gestibank-spring"]
+	path = gestibank-spring
+	url = https://github.com/kxxdhdn/gestibank-spring.git
+[submodule "gestibank-angular"]
+	path = gestibank-angular
+	url = https://github.com/kxxdhdn/gestibank-angular.git
 [submodule "gestibank-frontend"]
 	path = gestibank-frontend
 	url = https://github.com/kxxdhdn/gestibank-frontend.git
