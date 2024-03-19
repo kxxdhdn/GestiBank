@@ -1,0 +1,68 @@
+# Docker Compose
+version: '3.3'
+
+# Define services
+services:
+  # Database Service (Mysql)
+  db:
+    image: mysql:latest
+    container_name: gestibank_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: gestibanque2024
+      MYSQL_USER: teamcat
+      MYSQL_PASSWORD: teamcat2024
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - gestibank_vol:/var/lib/mysql
+    networks:
+      - gestibank_net
+
+  # phpmyadmin Service
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8089:80
+    container_name: gestibank_pmad
+    depends_on:
+      - db
+    restart: always
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - gestibank_net
+
+  # Backend Service
+  back:
+    image: kxxdhdn/gestibank-backend:${VERSION}
+    ports:
+      - "8088:8081"
+    container_name: gestibank_back
+    depends_on:
+      - db
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/gestibanque2024?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: teamcat
+      SPRING_DATASOURCE_PASSWORD: teamcat2024
+    networks:
+      - gestibank_net
+
+  # Frontend Service
+  front:
+    image: kxxdhdn/gestibank-frontend:${VERSION}
+    ports:
+      - "8087:80"
+    container_name: gestibank_front
+    depends_on:
+      - back
+    restart: always
+    networks:
+      - gestibank_net
+
+# Volumes to be created to persist data
+volumes:
+  gestibank_vol:
+
+networks:
+  gestibank_net:
